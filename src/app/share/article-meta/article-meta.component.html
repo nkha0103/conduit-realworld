@@ -1,0 +1,47 @@
+<div class="article-meta">
+  <a [routerLink]="['', '@' + userName]"><img src="{{userAva}}" /></a>
+  <div class="info">
+    <a [routerLink]="['', '@' + userName]" class="author">{{userName}}</a>
+    <span class="date">{{articleDate | date:'MMMM d'}}</span>
+  </div>
+
+  <ng-container *ngIf="!articleOwnerCheck">
+    <button class="btn btn-sm btn-outline-secondary" *ngIf="!articleAuthorFollowCheck" (click)="followAuthor()">
+      <i class="ion-plus-round"></i>
+      &nbsp;
+      Follow {{userName}}
+    </button>
+    <button class="btn btn-sm btn-secondary" *ngIf="articleAuthorFollowCheck" (click)="unfollowAuthor()">
+      <i class="ion-plus-round"></i>
+      &nbsp;
+      Unfollow {{userName}}
+    </button>
+
+
+    &nbsp;
+    <button class="btn btn-sm btn-outline-primary" *ngIf="!articleFavorCheck" (click)="addFavor()">
+      <i class="ion-heart"></i>
+      &nbsp;
+      Favorite Post <span class="counter">({{articleFavorCount}})</span>
+    </button>
+    <button class="btn btn-sm btn-primary" *ngIf="articleFavorCheck" (click)="unFavor()">
+      <i class="ion-heart"></i>
+      &nbsp;
+      Unfavorite Post <span class="counter">({{articleFavorCount}})</span>
+    </button>
+  </ng-container>
+
+  <ng-container *ngIf="articleOwnerCheck">
+  <button class="btn btn-sm btn-outline-secondary" (click)="editArticle()">
+    <i class="ion-edit"></i>
+    &nbsp;
+    Edit Article
+  </button>
+  &nbsp;
+  <button class="btn btn-outline-danger btn-sm" (click)="deleteArticle()">
+    <i class="ion-trash-a"></i>
+    &nbsp;
+    Delete Article
+  </button>
+</ng-container>
+</div>

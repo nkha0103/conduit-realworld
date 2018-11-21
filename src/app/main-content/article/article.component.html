@@ -1,0 +1,75 @@
+<div class="article-page">
+  <ng-container *ngIf="currentData">
+    <div class="banner">
+      <div class="container">
+
+        <h1>{{currentData.article.title}}</h1>
+
+        <app-article-meta [userName]="currentData.article.author.username" [userAva]="currentData.article.author.image"
+          [articleLink]="currentArticleLink" [articleDate]="currentData.article.createdAt" [articleFavorCount]="currentData.article.favoritesCount"
+          [articleFavorCheck]="currentData.article.favorited" [articleAuthorFollowCheck]="currentData.article.author.following"></app-article-meta>
+
+      </div>
+    </div>
+
+    <div class="container page">
+
+      <div class="row article-content">
+        <div class="col-md-12">
+          <p>
+            {{currentData.article.body}}
+          </p>
+          <ul class="tag-list">
+            <li class="tag-default tag-pill tag-outline" *ngFor="let item of currentData.article.tagList">
+              {{item}}
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <hr />
+
+      <div class="article-actions">
+        <app-article-meta [userName]="currentData.article.author.username" [userAva]="currentData.article.author.image"
+          [articleLink]="currentArticleLink" [articleDate]="currentData.article.createdAt" [articleFavorCount]="currentData.article.favoritesCount"
+          [articleFavorCheck]="currentData.article.favorited" [articleAuthorFollowCheck]="currentData.article.author.following">
+        </app-article-meta>
+      </div>
+
+      <div class="row">
+
+        <div class="col-xs-12 col-md-8 offset-md-2">
+
+          <p *ngIf="!loginCheck">
+            <a [routerLink]="['/login']">Sign in</a> or <a [routerLink]="['/register']">sign up</a> to add comments on
+            this article.
+          </p>
+
+          <form class="card comment-form" *ngIf="loginCheck" (ngSubmit)="addComment()" [formGroup]="commentForm">
+            <div class="card-block">
+              <textarea class="form-control" placeholder="Write a comment..." rows="3" formControlName="commentInput"></textarea>
+            </div>
+            <div class="card-footer">
+              <img src="https://static.productionready.io/images/smiley-cyrus.jpg" class="comment-author-img" />
+              <button class="btn btn-sm btn-primary">
+                Post Comment
+              </button>
+            </div>
+          </form>
+
+          <ng-container *ngFor="let item of commentsData?.comments; let i = index">
+            <app-article-comment-item [cmId]="item.id" [cmDate]="item.createdAt" [cmBody]="item.body" [cmAuthor]="item.author"
+              [articleLink]="currentArticleLink">
+              <span class="mod-options" *ngIf="currentUser == item.author.username">
+                <i class="ion-trash-a" (click)="deleteCm(item.id, i)"></i>
+              </span>
+            </app-article-comment-item>
+          </ng-container>
+
+        </div>
+
+      </div>
+
+    </div>
+  </ng-container>
+</div>

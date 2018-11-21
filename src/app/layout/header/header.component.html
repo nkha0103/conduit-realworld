@@ -1,0 +1,43 @@
+<nav class="navbar navbar-light">
+  <div class="container">
+    <a [routerLink]="['']" class="navbar-brand">conduit</a>
+    <ul class="nav navbar-nav pull-xs-right">
+      <ng-container *ngIf="currentUser">
+        <li class="nav-item">
+          <!-- Add "active" class when you're on that page" -->
+          <a [routerLink]="['']" class="nav-link active">Home</a>
+        </li>
+        <li class="nav-item">
+          <a [routerLink]="['/editor']" class="nav-link">
+            <i class="ion-compose"></i>&nbsp;New Article
+          </a>
+        </li>
+        <li class="nav-item">
+          <a [routerLink]="['/settings']" class="nav-link">
+            <i class="ion-gear-a"></i>&nbsp;Settings
+          </a>
+        </li>
+        <li class="nav-item">
+          <a [routerLink]="['', '@' +  currentUser]"class="nav-link">{{currentUser}}</a>
+        </li>
+      </ng-container>
+
+      <ng-container *ngIf="!currentUser">
+          <li class="nav-item">
+              <!-- Add "active" class when you're on that page" -->
+              <a [routerLink]="['']" class="nav-link active">Home</a>
+            </li>
+            <li class="nav-item">
+              <a [routerLink]="['/login']" class="nav-link">
+                &nbsp;Sign in
+              </a>
+            </li>
+            <li class="nav-item">
+              <a [routerLink]="['/register']" class="nav-link">
+                &nbsp;Sign up
+              </a>
+            </li>
+      </ng-container>
+    </ul>
+  </div>
+</nav>

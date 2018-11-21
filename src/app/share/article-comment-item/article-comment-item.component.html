@@ -1,0 +1,14 @@
+<div class="card">
+  <div class="card-block">
+    <p class="card-text">{{cmBody}}</p>
+  </div>
+  <div class="card-footer">
+    <a [routerLink]="['', '@' + cmAuthor.username]" class="comment-author">
+      <img src="{{cmAuthor.image}}" class="comment-author-img" />
+    </a>
+    &nbsp;
+    <a [routerLink]="['', '@' + cmAuthor.username]" class="comment-author">{{cmAuthor.username}}</a>
+    <span class="date-posted">{{cmDate | date:'MMMM d, yyyy' }}</span>
+    <ng-content></ng-content>
+  </div>
+</div>

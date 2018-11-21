@@ -1,0 +1,93 @@
+<div class="profile-page">
+
+  <div class="user-info">
+    <div class="container">
+      <div class="row">
+        <ng-container *ngIf="profileData">
+          <div class="col-xs-12 col-md-10 offset-md-1">
+            <img src="{{ profileData.profile.image }}" class="user-img" />
+            <h4>{{ profileData.profile.username }}</h4>
+            <p>
+              {{ profileData.profile.bio }}
+            </p>
+            <button class="btn btn-sm btn-outline-secondary action-btn" *ngIf="!profileOwnerCheck && !profileFollowCheck"
+              (click)="follow()">
+              <i class="ion-plus-round"></i>
+              &nbsp;
+              Follow {{ profileData.profile.username }}
+            </button>
+            <button class="btn btn-sm action-btn ng-binding btn-secondary" *ngIf="!profileOwnerCheck && profileFollowCheck"
+              (click)="unfollow()">
+              <i class="ion-plus-round"></i>
+              &nbsp;
+              Unfollow {{ profileData.profile.username }}
+            </button>
+            <a [routerLink]="['/settings']" class="btn btn-sm btn-outline-secondary action-btn" *ngIf="profileOwnerCheck">
+              <i class="ion-gear-a"></i>
+              &nbsp;
+              Edit Profile Settings
+            </a>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="row">
+
+      <div class="col-xs-12 col-md-10 offset-md-1">
+        <div class="articles-toggle">
+          <ul class="nav nav-pills outline-active" *ngIf="profileData">
+            <ng-container *ngFor="let item of articlesTab; let i = index; let even = even; let odd = odd;">
+              <li class="nav-item" *ngIf="even">
+                <a [routerLink]="['', '@' +  profileData.profile.username]" class="nav-link" [class.active]="cTab === i+1"
+                  (click)="setTab(i, $event)">{{item}}</a>
+              </li>
+              <li class="nav-item" *ngIf="odd">
+                <a [routerLink]="['', '@' +  profileData.profile.username, 'favorites']" class="nav-link"
+                  [class.active]="cTab === i+1" (click)="setTab(i, $event)">{{item}}</a>
+              </li>
+            </ng-container>
+          </ul>
+        </div>
+
+        <ng-container *ngIf="isLoading">
+          <div class="article-preview">
+            Loading articles...
+          </div>
+        </ng-container>
+
+        <ng-container *ngFor="let item of profileArticlesData?.articles">
+          <app-article-item [userName]="item.author.username" [userAva]="item.author.image" [articleDate]="item.createdAt"
+            [articleTitle]="item.title" [articleDesc]="item.description" [articleLink]="item.slug" [articleFavorCount]="item.favoritesCount"
+            [articleTags]="item.tagList" [articleFavorCheck]="item.favorited"></app-article-item>
+        </ng-container>
+
+        <ng-container *ngIf="pages && pages.length > 1">
+          <div>
+            <nav>
+              <ul class="pagination" *ngIf="cTab == 1">
+                <li class="page-item" *ngFor="let p of pages; let i=index" [class.active]="page === i+1">
+                  <a href="#" class="page-link" (click)="setPageArticles(i, $event)">
+                    {{i+1}}
+                  </a>
+                </li>
+              </ul>
+              <ul class="pagination" *ngIf="cTab == 2">
+                <li class="page-item" *ngFor="let p of pages; let i=index" [class.active]="page === i+1">
+                  <a href="#" class="page-link" (click)="setPageFaovArticles(i, $event)">
+                    {{i+1}}
+                  </a>
+                </li>
+              </ul>
+            </nav>
+          </div>
+        </ng-container>
+
+      </div>
+
+    </div>
+  </div>
+
+</div>

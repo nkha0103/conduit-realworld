@@ -1,0 +1,22 @@
+<div class="article-preview">
+  <div class="article-meta">
+    <a [routerLink]="['', '@' + userName]"><img src="{{userAva}}" /></a>
+    <div class="info">
+      <a [routerLink]="['', '@' + userName]" class="author">{{userName}}</a>
+      <span class="date">{{articleDate | date:'MMMM d' }}</span>
+    </div>
+    <button class="btn btn-outline-primary btn-sm pull-xs-right" (click)="favorControl()" [class.active]="articleFavorCheck">
+      <i class="ion-heart"></i> {{articleFavorCount}}
+    </button>
+  </div>
+  <a [routerLink]="['', 'article' ,articleLink]" class="preview-link">
+    <h1>{{articleTitle}}</h1>
+    <p>{{articleDesc}}</p>
+    <span>Read more...</span>
+    <ul class="tag-list" *ngIf="articleTags">
+      <li class="tag-default tag-pill tag-outline" *ngFor="let item of articleTags">
+        {{item}}
+      </li>
+    </ul>
+  </a>
+</div>
